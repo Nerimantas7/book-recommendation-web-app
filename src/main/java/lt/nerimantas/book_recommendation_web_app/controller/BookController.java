@@ -24,10 +24,11 @@ public class BookController {
         return new ResponseEntity<>(addedBook, HttpStatus.CREATED);
     }
 
-    // Build Get Book  REST API
+    // Build Get Book REST API
     @GetMapping("{id}")
     public ResponseEntity<BookDto> getBookById(@PathVariable("id") Long bookId){
         BookDto bookDto = bookService.getBookById(bookId);
+        System.out.println("Book find with given ID: " + bookDto);
         return ResponseEntity.ok(bookDto);
     }
 
