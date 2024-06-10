@@ -1,9 +1,12 @@
 package lt.nerimantas.book_recommendation_web_app.controller;
 
 import lombok.AllArgsConstructor;
+import lt.nerimantas.book_recommendation_web_app.dto.BookCategoryDto;
 import lt.nerimantas.book_recommendation_web_app.dto.BookDto;
 import lt.nerimantas.book_recommendation_web_app.entity.BookCategory;
+import lt.nerimantas.book_recommendation_web_app.service.BookCategoryService;
 import lt.nerimantas.book_recommendation_web_app.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +19,16 @@ import java.util.List;
 public class BookController {
 
     private BookService bookService;
+    @Autowired
     private BookCategory bookCategory;
+    @Autowired
+    private BookCategoryService bookCategoryService;
 
     //Build Add Book REST API
     @PostMapping
     public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto){
         BookDto addedBook = bookService.addBook(bookDto);
+//        BookCategoryDto addedCategory = b
         System.out.println("Book received: " + addedBook);
         return new ResponseEntity<>(addedBook, HttpStatus.CREATED);
     }
@@ -39,5 +46,10 @@ public class BookController {
     public  ResponseEntity<List<BookDto>> getAllBooks(){
         List<BookDto> books = bookService.getAllBooks();
         return ResponseEntity.ok(books);
+    }
+
+    @PostMapping("/{bookId}/categories/{categoryId}")
+    public BookDto addCategoryToBook(@PathVariable Long bookId, @PathVariable Long categoryId) {
+        return bookService.addCategoryToBook(bookId, categoryId);
     }
 }

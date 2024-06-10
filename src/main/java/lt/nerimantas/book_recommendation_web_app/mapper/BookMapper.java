@@ -13,7 +13,7 @@ public class BookMapper {
                 book.getCodeISBN(),
                 book.getImagePath(),
                 book.getBookPages(),
-                book.getCategory()
+                book.getCategories()
         );
     }
 
