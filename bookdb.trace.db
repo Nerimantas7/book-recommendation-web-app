@@ -1,3 +1,0 @@
-2024-06-09 21:37:20.226561+03:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BOOKS" not found (this database is empty); SQL statement:
-insert into books (book_description,book_pages,book_title,category,code_isbn,image_path,id) values (?,?,?,?,?,?,default) [42104-224]
