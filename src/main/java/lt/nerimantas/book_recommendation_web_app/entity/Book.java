@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lt.nerimantas.book_recommendation_web_app.entity.enums.BookCategory;
 
 @Data
 @AllArgsConstructor
@@ -33,6 +32,5 @@ public class Book {
     private int bookPages;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private BookCategory category;
 }

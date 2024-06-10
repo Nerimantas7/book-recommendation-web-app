@@ -1,10 +1,9 @@
 package lt.nerimantas.book_recommendation_web_app.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lt.nerimantas.book_recommendation_web_app.entity.enums.BookCategory;
+import lt.nerimantas.book_recommendation_web_app.entity.BookCategory;
 
 @Data
 @NoArgsConstructor
