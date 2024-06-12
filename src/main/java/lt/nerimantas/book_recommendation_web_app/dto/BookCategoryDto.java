@@ -11,4 +11,5 @@ public class BookCategoryDto {
 
     private Long id;
     private String bookCategory;
+    private String categoryDescription;
 }

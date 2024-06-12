@@ -23,11 +23,14 @@ public class BookCategory {
     @Column(name = "category", nullable = false, unique = true)
     private String bookCategory;
 
-    @ManyToMany(mappedBy = "categories") // Assuming one category can have many books
-    private List<Book> books;
+    @Column(name = "category_description")
+    private String categoryDescription;
 
-    public BookCategory(Long id, String bookCategory) {
-    }
+//    @ManyToMany(mappedBy = "categories") // Assuming one category can have many books
+//    private List<Book> books;
+//
+//    public BookCategory(Long id, String bookCategory) {
+//    }
 
 
 

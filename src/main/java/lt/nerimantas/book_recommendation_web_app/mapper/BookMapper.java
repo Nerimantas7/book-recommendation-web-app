@@ -12,8 +12,8 @@ public class BookMapper {
                 book.getBookDescription(),
                 book.getCodeISBN(),
                 book.getImagePath(),
-                book.getBookPages(),
-                book.getCategories()
+                book.getBookPages()
+//                book.getCategories()
         );
     }
 
@@ -24,8 +24,8 @@ public class BookMapper {
                 bookDto.getBookDescription(),
                 bookDto.getCodeISBN(),
                 bookDto.getImagePath(),
-                bookDto.getBookPages(),
-                bookDto.getCategory()
+                bookDto.getBookPages()
+//                bookDto.getCategory()
         );
     }
 }

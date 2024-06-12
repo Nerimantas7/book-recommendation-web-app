@@ -11,7 +11,8 @@ public class BookCategoryMapper {
         }
         return new BookCategoryDto(
                 bookCategory.getId(),
-                bookCategory.getBookCategory()
+                bookCategory.getBookCategory(),
+                bookCategory.getCategoryDescription()
         );
     }
 
@@ -21,7 +22,8 @@ public class BookCategoryMapper {
         }
         return new BookCategory(
                 bookCategoryDto.getId(),
-                bookCategoryDto.getBookCategory()
+                bookCategoryDto.getBookCategory(),
+                bookCategoryDto.getCategoryDescription()
         );
     }
 }

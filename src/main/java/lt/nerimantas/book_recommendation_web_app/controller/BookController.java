@@ -19,10 +19,10 @@ import java.util.List;
 public class BookController {
 
     private BookService bookService;
-    @Autowired
-    private BookCategory bookCategory;
-    @Autowired
-    private BookCategoryService bookCategoryService;
+//    @Autowired
+//    private BookCategory bookCategory;
+//    @Autowired
+//    private BookCategoryService bookCategoryService;
 
     //Build Add Book REST API
     @PostMapping
@@ -48,8 +48,25 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
-    @PostMapping("/{bookId}/categories/{categoryId}")
-    public BookDto addCategoryToBook(@PathVariable Long bookId, @PathVariable Long categoryId) {
-        return bookService.addCategoryToBook(bookId, categoryId);
+    //Build Update Book REST API
+
+    @PutMapping("{id}")
+    public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId,
+                                              @RequestBody BookDto updatedBook){
+        BookDto bookDto = bookService.updateBook(bookId, updatedBook);
+        System.out.println("Book successfully updated with given ID: " + bookDto);
+        return ResponseEntity.ok(bookDto);
     }
+
+    // Build Delete Book REST API
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable("id") Long bookId){
+        bookService.deleteBook(bookId);
+        return ResponseEntity.ok("Book deleted successfully!");
+    }
+
+//    @PostMapping("/{bookId}/categories/{categoryId}")
+//    public BookDto addCategoryToBook(@PathVariable Long bookId, @PathVariable Long categoryId) {
+//        return bookService.addCategoryToBook(bookId, categoryId);
+//    }
 }

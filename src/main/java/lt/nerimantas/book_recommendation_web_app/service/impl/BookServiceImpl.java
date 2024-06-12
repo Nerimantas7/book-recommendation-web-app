@@ -43,10 +43,32 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
-    public BookDto addCategoryToBook(Long bookId, Long categoryId){
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
-        BookCategory bookCategory = bookCategoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
-        book.getCategories().add(bookCategory);
-        return bookRepository.save(book);
-    };
+    @Override
+    public BookDto updateBook(Long bookId, BookDto updatedBook) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book is not exist with given id: " + bookId));
+        book.setBookTitle(updatedBook.getBookTitle());
+        book.setBookDescription(updatedBook.getBookDescription());
+        book.setCodeISBN(updatedBook.getCodeISBN());
+        book.setImagePath(updatedBook.getImagePath());
+        book.setBookPages(updatedBook.getBookPages());
+
+        Book updatedBookObj = bookRepository.save(book);
+        return BookMapper.mapToBookDto(updatedBookObj);
+    }
+
+    @Override
+    public void deleteBook(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book is not exist with given id: " + bookId));
+        bookRepository.deleteById(bookId);
+    }
+
+//    public BookDto addCategoryToBook(Long bookId, Long categoryId){
+//        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+//        BookCategory bookCategory = bookCategoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
+//        book.getCategories().add(bookCategory);
+//        return bookRepository.save(book);
+//    };
 }

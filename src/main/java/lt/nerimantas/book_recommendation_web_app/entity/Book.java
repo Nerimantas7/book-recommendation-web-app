@@ -35,17 +35,17 @@ public class Book {
     @Column(name = "book_pages")
     private int bookPages;
 
-    @ManyToOne // Assuming each book has one category
-    @JoinColumn(name = "category_id")
-    private List<BookCategory> categories = new ArrayList<>();
-
-    public void addCategory(BookCategory bookCategory){
-        categories.add(bookCategory);
-        bookCategory.getBooks().add(this);
-    }
-
-    public void removeCategory(BookCategory bookCategory){
-        categories.remove(bookCategory);
-        bookCategory.getBooks().remove(this);
-    }
+//    @ManyToOne // Assuming each book has one category
+//    @JoinColumn(name = "category_id")
+//    private List<BookCategory> categories = new ArrayList<>();
+//
+//    public void addCategory(BookCategory bookCategory){
+//        categories.add(bookCategory);
+//        bookCategory.getBooks().add(this);
+//    }
+//
+//    public void removeCategory(BookCategory bookCategory){
+//        categories.remove(bookCategory);
+//        bookCategory.getBooks().remove(this);
+//    }
 }
