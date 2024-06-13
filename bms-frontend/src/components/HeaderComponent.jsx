@@ -1,6 +1,11 @@
 import React from 'react'
 
 const HeaderComponent = () => {
+
+    function addNewBook() {
+        navigator('/add-book')
+    }
+
     return (
         <div>
             <header className='header'>
@@ -16,7 +21,7 @@ const HeaderComponent = () => {
                                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Features</a>
+                                    <a class="nav-link" href="/add-book">Add new book</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Pricing</a>
