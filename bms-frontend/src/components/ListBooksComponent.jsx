@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { listBooks } from '../services/BookService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { useNavigate } from 'react-router-dom';
 
 const ListBooksComponent = () => {
     const [books, setBooks] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
+
+    const navigator = useNavigate();
 
     useEffect(() => {
         listBooks()
@@ -28,6 +31,14 @@ const ListBooksComponent = () => {
         setSelectedBook(null);
     };
 
+    const addNewBook = () => {
+        navigator('/add-book');
+    };
+
+    const updateBook = (id) => {
+        navigator(`/edit-book/${id}`);
+    };
+
     return (
         <div>
             <div className="row row-cols-1 row-cols-md-3 g-1 mx-4 my-3">
@@ -43,8 +54,11 @@ const ListBooksComponent = () => {
                                     <p className="card-text">{book.bookDescription}</p>
                                     <p className="card-text">ISBN: {book.codeISBN}</p>
                                     <p className="card-text">{book.bookPages} pages</p>
-                                    <button className="btn btn-secondary" onClick={() => handleShowModal(book)}>Write a comment
-                                    </button>
+                                    <button className="btn btn-secondary" onClick={() => handleShowModal(book)}>Write a comment</button>
+                                </div>
+                                <div className="card-footer">
+                                    <button type="button" className="btn btn-outline-secondary" onClick={() => updateBook(book.id)}>Update</button>
+                                    <button type="button" className="btn btn-outline-secondary mx-3">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +67,7 @@ const ListBooksComponent = () => {
             </div>
 
             {showModal && selectedBook && (
-                <div className="modal show d-block" tabIndex="-1">
+                <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -69,7 +83,7 @@ const ListBooksComponent = () => {
                                     <button type="submit" className="btn btn-secondary">Save</button>
                                     <button type="button" className="btn btn-light mx-3" onClick={handleCloseModal}>Close</button>
                                 </form>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>

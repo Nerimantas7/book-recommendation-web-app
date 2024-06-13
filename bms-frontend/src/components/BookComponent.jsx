@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { createBook } from '../services/BookService'
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { createBook, getBook, updateBook } from '../services/BookService'; // Add necessary imports
 
 const BookComponent = () => {
 
-    const [bookTitle, setBookTitle] = useState('')
-    const [bookDescription, setBookDescription] = useState('')
-    const [imagePath, setImagePath] = useState('')
-    const [codeISBN, setCodeISBN] = useState('')
-    const [bookPages, setBookPages] = useState('')
+    const [bookTitle, setBookTitle] = useState('');
+    const [bookDescription, setBookDescription] = useState('');
+    const [imagePath, setImagePath] = useState('');
+    const [codeISBN, setCodeISBN] = useState('');
+    const [bookPages, setBookPages] = useState('');
+
+    const { id } = useParams();
 
     // Initialize state variables to hold validation errors
     const [errors, setErrors] = useState({
@@ -17,80 +19,103 @@ const BookComponent = () => {
         imagePath: '',
         codeISBN: '',
         bookPages: ''
-    })
+    });
 
     const navigator = useNavigate();
 
-    function saveBook(e) {
+    useEffect(() => {
+        if (id) {
+            getBook(id).then((response) => {
+                setBookTitle(response.data.bookTitle);
+                setBookDescription(response.data.bookDescription);
+                setImagePath(response.data.imagePath);
+                setCodeISBN(response.data.codeISBN);
+                setBookPages(response.data.bookPages);
+            }).catch(error => {
+                console.error(error);
+            });
+        }
+    }, [id]);
+
+    // Function to save added or updated data from form
+    function saveOrUpdateBook(e) {
         e.preventDefault();
 
-        if (validateForm()) {
+        if (validateForm()) { // Add form validation check
+            const book = { bookTitle, bookDescription, imagePath, codeISBN, bookPages };
 
-            const book = { bookTitle, bookDescription, imagePath, codeISBN, bookPages }
+            if (id) {
+                // Add a confirmation dialog
+                if (window.confirm('Are you sure you want to update this book?')) {
+                    console.log(book);
 
-            // Add a confirmation dialog
-            if (window.confirm('Are you sure you want to save this book?')) {
-                console.log(book);
-                createBook(book).then((response) => {
-                    console.log(response.data);
-                    navigator('/books');
-                }).catch(error => {
-                    console.error(error);
-                });
+                    updateBook(id, book).then((response) => {
+                        console.log(response.data);
+                        navigator('/books');
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                } else {
+                    console.log('Update operation cancelled');
+                }
             } else {
-                // If the user clicks "Cancel", do nothing
-                console.log('Save operation cancelled');
+                // Add a confirmation dialog
+                if (window.confirm('Are you sure you want to save this book?')) {
+                    console.log(book);
+
+                    createBook(book).then((response) => {
+                        console.log(response.data);
+                        navigator('/books');
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                } else {
+                    console.log('Save operation cancelled');
+                }
             }
-
-            console.log(book)
-
-            createBook(book).then((response) => {
-                console.log(response.data);
-                navigator('/books')
-            })
         }
     }
 
-    //Function to check the form data
+    // Function to check the form data
     function validateForm() {
         let valid = true;
 
-        //we use spread operator(...) to copy object into another object
-        const errorsCopy = { ...errors }
+        // Use spread operator(...) to copy object into another object
+        const errorsCopy = { ...errors };
 
         if (bookTitle.trim()) {
             errorsCopy.bookTitle = '';
         } else {
             errorsCopy.bookTitle = 'Book title is required';
-            valid = false
+            valid = false;
         }
 
         if (bookDescription.trim()) {
             errorsCopy.bookDescription = '';
         } else {
             errorsCopy.bookDescription = 'Book description is required';
-            valid = false
+            valid = false;
         }
 
         if (imagePath.trim()) {
             errorsCopy.imagePath = '';
         } else {
             errorsCopy.imagePath = 'Image path is required';
-            valid = false
+            valid = false;
         }
 
         if (codeISBN.trim()) {
             errorsCopy.codeISBN = '';
         } else {
             errorsCopy.codeISBN = 'ISBN code is required';
-            valid = false
+            valid = false;
         }
 
-        if (bookPages.trim()) {
+        if (bookPages && !isNaN(bookPages)) {
             errorsCopy.bookPages = '';
         } else {
-            errorsCopy.bookPages = 'Number of pages is required';
-            valid = false
+            errorsCopy.bookPages = 'Number of pages is required and must be a number';
+            valid = false;
         }
 
         setErrors(errorsCopy);
@@ -98,12 +123,20 @@ const BookComponent = () => {
         return valid;
     }
 
+    function pageTitle() {
+        if (id) {
+            return <h2 className='text-center'>Update Book</h2>;
+        } else {
+            return <h2 className='text-center'>Add Book</h2>;
+        }
+    }
+
     return (
         <div className='container'>
             <br /> <br />
             <div className='row'>
                 <div className='card col-md-6 offset-md-3 offset-md-3'>
-                    <h2 className='text-center'>Add Book</h2>
+                    {pageTitle()}
                     <div className='card-body'>
                         <form>
                             <div className='form-group mb-2'>
@@ -115,8 +148,7 @@ const BookComponent = () => {
                                     value={bookTitle}
                                     className={`form-control ${errors.bookTitle ? 'is-invalid' : ''}`}
                                     onChange={(e) => setBookTitle(e.target.value)}
-                                >
-                                </input>
+                                />
                                 {errors.bookTitle && <div className='invalid-feedback'>{errors.bookTitle}</div>}
                             </div>
 
@@ -129,8 +161,7 @@ const BookComponent = () => {
                                     value={bookDescription}
                                     className={`form-control ${errors.bookDescription ? 'is-invalid' : ''}`}
                                     onChange={(e) => setBookDescription(e.target.value)}
-                                >
-                                </input>
+                                />
                                 {errors.bookDescription && <div className='invalid-feedback'>{errors.bookDescription}</div>}
                             </div>
 
@@ -143,8 +174,7 @@ const BookComponent = () => {
                                     value={imagePath}
                                     className={`form-control ${errors.imagePath ? 'is-invalid' : ''}`}
                                     onChange={(e) => setImagePath(e.target.value)}
-                                >
-                                </input>
+                                />
                                 {errors.imagePath && <div className='invalid-feedback'>{errors.imagePath}</div>}
                             </div>
 
@@ -157,8 +187,7 @@ const BookComponent = () => {
                                     value={codeISBN}
                                     className={`form-control ${errors.codeISBN ? 'is-invalid' : ''}`}
                                     onChange={(e) => setCodeISBN(e.target.value)}
-                                >
-                                </input>
+                                />
                                 {errors.codeISBN && <div className='invalid-feedback'>{errors.codeISBN}</div>}
                             </div>
 
@@ -171,18 +200,17 @@ const BookComponent = () => {
                                     value={bookPages}
                                     className={`form-control ${errors.bookPages ? 'is-invalid' : ''}`}
                                     onChange={(e) => setBookPages(e.target.value)}
-                                >
-                                </input>
+                                />
                                 {errors.bookPages && <div className='invalid-feedback'>{errors.bookPages}</div>}
                             </div>
 
-                            <button className='btn btn-secondary' onClick={saveBook}>Submit</button>
+                            <button className='btn btn-secondary' onClick={saveOrUpdateBook}>Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default BookComponent
+export default BookComponent;

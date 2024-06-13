@@ -33,7 +33,7 @@ public class Book {
     private String imagePath;
 
     @Column(name = "book_pages")
-    private int boo;
+    private int bookPages;
 
 //    @ManyToOne // Assuming each book has one category
 //    @JoinColumn(name = "category_id")

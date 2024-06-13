@@ -20,6 +20,8 @@ function App() {
           <Route path='/books' element = {<ListBooksComponent/>}></Route>
           {/* // http://localhost:5173/add-book */}
           <Route path='/add-book' element = {<BookComponent/>}></Route>
+          {/* // http://localhost:5173/edi-book */}
+          <Route path='/edit-book/:id' element = {<BookComponent/>}></Route>
         </Routes>        
         <FooterComponent />
       </BrowserRouter>
