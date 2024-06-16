@@ -20,7 +20,7 @@ public class BookCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "category", nullable = false, unique = true)
+    @Column(name = "category_name", nullable = false, unique = true)
     private String bookCategory;
 
     @Column(name = "category_description")

@@ -123,6 +123,10 @@ const BookComponent = () => {
         return valid;
     }
 
+    const handleCancel = () => {
+        navigator('/');
+    };
+
     function pageTitle() {
         if (id) {
             return <h2 className='text-center'>Update Book</h2>;
@@ -205,6 +209,7 @@ const BookComponent = () => {
                             </div>
 
                             <button className='btn btn-secondary' onClick={saveOrUpdateBook}>Submit</button>
+                            <button className='btn btn-secondary mx-3' onClick={handleCancel}>Cancel</button>
                         </form>
                     </div>
                 </div>

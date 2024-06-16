@@ -1,0 +1,12 @@
+package lt.nerimantas.book_recommendation_web_app.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value =  HttpStatus.NOT_FOUND)
+public class BookCategoryNotSet extends RuntimeException{
+
+    public BookCategoryNotSet(String message){
+        super((message));
+    }
+}

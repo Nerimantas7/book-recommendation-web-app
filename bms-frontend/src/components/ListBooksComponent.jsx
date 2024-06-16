@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { listBooks } from '../services/BookService';
+import { deleteBook, listBooks } from '../services/BookService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,10 @@ const ListBooksComponent = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
+        getAllBooks()
+    }, []);
+
+    function getAllBooks(){
         listBooks()
             .then((response) => {
                 setBooks(response.data);
@@ -19,7 +23,7 @@ const ListBooksComponent = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, []);
+    }
 
     const handleShowModal = (book) => {
         setSelectedBook(book);
@@ -38,6 +42,19 @@ const ListBooksComponent = () => {
     const updateBook = (id) => {
         navigator(`/edit-book/${id}`);
     };
+
+    function removeBook(id){
+        console.log(id);
+    if(window.confirm('Are yo sure you want to delete this book?')){
+        deleteBook(id).then((response) => {
+            getAllBooks();
+        }).catch(error =>{
+            console.error(error);
+        });
+    }else{
+        console.log('Delete aperation cancelled')
+    }
+    }
 
     return (
         <div>
@@ -58,7 +75,7 @@ const ListBooksComponent = () => {
                                 </div>
                                 <div className="card-footer">
                                     <button type="button" className="btn btn-outline-secondary" onClick={() => updateBook(book.id)}>Update</button>
-                                    <button type="button" className="btn btn-outline-secondary mx-3">Delete</button>
+                                    <button type="button" className="btn btn-outline-secondary mx-3" onClick={() => removeBook(book.id)}>Delete</button>
                                 </div>
                             </div>
                         </div>
