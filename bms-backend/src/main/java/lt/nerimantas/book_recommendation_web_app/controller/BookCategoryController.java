@@ -38,4 +38,20 @@ public class BookCategoryController {
         List<BookCategoryDto> categories = bookCategoryService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
+
+    // Build Update Book Category REST API
+    @PutMapping("{id}")
+    public ResponseEntity<BookCategoryDto> updateBookCategory(@PathVariable("id") Long bookCategoryId,
+                                                              @RequestBody BookCategoryDto updatedCategory){
+        BookCategoryDto bookCategoryDto = bookCategoryService.updateBookCategory(bookCategoryId, updatedCategory);
+        System.out.println(("Book category successfully updated with given Id: " + bookCategoryId));
+        return ResponseEntity.ok(bookCategoryDto);
+    }
+
+    // Build Delete Book Category REST API
+    @DeleteMapping("id")
+    public ResponseEntity<String> deleteCategory(@PathVariable("id") Long bookCategoryId){
+        bookCategoryService.deleteBookCategory(bookCategoryId);
+        return ResponseEntity.ok("Book Category deleted successfully!");
+    }
 }

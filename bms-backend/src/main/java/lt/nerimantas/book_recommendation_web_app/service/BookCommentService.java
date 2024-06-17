@@ -8,7 +8,11 @@ public interface BookCommentService {
 
     BookCommentDto addComment(BookCommentDto bookCommentDto);
 
-    BookCommentDto getCommentById(Long coomentId);
+    BookCommentDto getCommentById(Long commentId);
 
     List<BookCommentDto> getAllComments();
+
+    BookCommentDto updateBookComment(Long bookCommentId, BookCommentDto updatedBookComment);
+
+    void deleteBookComment (Long bookCommentId);
 }

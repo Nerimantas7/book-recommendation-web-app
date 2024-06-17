@@ -1,6 +1,7 @@
 package lt.nerimantas.book_recommendation_web_app.service;
 
 import lt.nerimantas.book_recommendation_web_app.dto.BookCategoryDto;
+import lt.nerimantas.book_recommendation_web_app.dto.BookDto;
 import lt.nerimantas.book_recommendation_web_app.repository.BookCategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +14,9 @@ public interface BookCategoryService {
     BookCategoryDto getCategoryById(Long categoryId);
 
     List<BookCategoryDto> getAllCategories();
+
+    BookCategoryDto updateBookCategory(Long bookCategoryId, BookCategoryDto updatedBookCategory);
+
+    void deleteBookCategory (Long bookCategoryId);
 
 }

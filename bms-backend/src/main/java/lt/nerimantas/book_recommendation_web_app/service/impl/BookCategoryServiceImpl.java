@@ -39,8 +39,20 @@ public class BookCategoryServiceImpl implements BookCategoryService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public void deleteById(Long id) {
-//
-//    }
+    @Override
+    public BookCategoryDto updateBookCategory(Long bookCategoryId, BookCategoryDto updatedBookCategory) {
+        BookCategory bookCategory = bookCategoryRepository.findById(bookCategoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book Category is not exists with given Id: " + bookCategoryId));
+        bookCategory.setBookCategory(updatedBookCategory.getBookCategory());
+        bookCategory.setCategoryDescription(updatedBookCategory.getCategoryDescription());
+        BookCategory savedBookCategory = bookCategoryRepository.save(bookCategory);
+        return BookCategoryMapper.mapToBookCategoryDto(savedBookCategory);
+    }
+
+    @Override
+    public void deleteBookCategory(Long bookCategoryId) {
+        BookCategory bookCategory = bookCategoryRepository.findById(bookCategoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book Category is not exists with given Id: " + bookCategoryId));
+        bookCategoryRepository.deleteById(bookCategoryId);
+    }
 }
