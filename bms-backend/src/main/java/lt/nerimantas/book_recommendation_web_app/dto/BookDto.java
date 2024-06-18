@@ -16,5 +16,5 @@ public class BookDto {
     private Long codeISBN;
     private String imagePath;
     private int bookPages;
-//    private BookCategory category;
+    private Long categoryId;
 }

@@ -35,9 +35,9 @@ const ListBooksComponent = () => {
         setSelectedBook(null);
     };
 
-    const addNewBook = () => {
-        navigator('/add-book');
-    };
+    // const addNewBook = () => {
+    //     navigator('/add-book');
+    // };
 
     const updateBook = (id) => {
         navigator(`/edit-book/${id}`);
@@ -72,6 +72,7 @@ const ListBooksComponent = () => {
                                     <p className="card-text">ISBN: {book.codeISBN}</p>
                                     <p className="card-text">{book.bookPages} pages</p>
                                     <button className="btn btn-secondary" onClick={() => handleShowModal(book)}>Write a comment</button>
+                                    <button className="btn btn-outline-secondary mx-3" onClick={() => handleShowModal(book)}>Read comments</button>
                                 </div>
                                 <div className="card-footer">
                                     <button type="button" className="btn btn-outline-secondary" onClick={() => updateBook(book.id)}>Update</button>

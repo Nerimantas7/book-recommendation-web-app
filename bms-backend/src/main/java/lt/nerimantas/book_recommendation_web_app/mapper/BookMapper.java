@@ -12,20 +12,19 @@ public class BookMapper {
                 book.getBookDescription(),
                 book.getCodeISBN(),
                 book.getImagePath(),
-                book.getBookPages()
-//                book.getCategories()
+                book.getBookPages(),
+                book.getBookCategory().getId()
         );
     }
 
     public static Book mapToBook(BookDto bookDto){
-        return new Book(
-                bookDto.getId(),
-                bookDto.getBookTitle(),
-                bookDto.getBookDescription(),
-                bookDto.getCodeISBN(),
-                bookDto.getImagePath(),
-                bookDto.getBookPages()
-//                bookDto.getCategory()
-        );
+        Book book =  new Book();
+                book.setId(bookDto.getId());
+                book.setBookTitle(bookDto.getBookTitle());
+                book.setBookDescription(bookDto.getBookDescription());
+                book.setCodeISBN(bookDto.getCodeISBN());
+                book.setImagePath(bookDto.getImagePath());
+                book.setBookPages(bookDto.getBookPages());
+                return book;
     }
 }

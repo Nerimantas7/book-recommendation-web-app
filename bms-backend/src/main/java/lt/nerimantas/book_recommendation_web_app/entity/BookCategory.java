@@ -26,13 +26,5 @@ public class BookCategory {
     @Column(name = "category_description")
     private String categoryDescription;
 
-//    @ManyToMany(mappedBy = "categories") // Assuming one category can have many books
-//    private List<Book> books;
-//
-//    public BookCategory(Long id, String bookCategory) {
-//    }
-
-
-
 }
 

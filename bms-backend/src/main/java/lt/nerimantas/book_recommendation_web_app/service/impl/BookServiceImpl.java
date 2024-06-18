@@ -19,11 +19,18 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
 
     private BookRepository bookRepository;
+
     private BookCategoryRepository bookCategoryRepository;
 
     @Override
     public BookDto addBook(BookDto bookDto) {
         Book book = BookMapper.mapToBook(bookDto);
+
+        BookCategory bookCategory = bookCategoryRepository.findById(bookDto.getCategoryId())
+                .orElseThrow(()-> new ResourceNotFoundException("Category is not exists with id: " + bookDto.getCategoryId()));
+
+        book.setBookCategory(bookCategory);
+
         Book addedBook = bookRepository.save(book);
         return BookMapper.mapToBookDto(addedBook);
     }
@@ -53,6 +60,11 @@ public class BookServiceImpl implements BookService {
         book.setCodeISBN(updatedBook.getCodeISBN());
         book.setImagePath(updatedBook.getImagePath());
         book.setBookPages(updatedBook.getBookPages());
+
+        BookCategory bookCategory = bookCategoryRepository.findById(updatedBook.getCategoryId())
+                .orElseThrow(()-> new ResourceNotFoundException("Category is not exists with id: " + updatedBook.getCategoryId()));
+
+        book.setBookCategory(bookCategory);
 
         Book updatedBookObj = bookRepository.save(book);
         return BookMapper.mapToBookDto(updatedBookObj);

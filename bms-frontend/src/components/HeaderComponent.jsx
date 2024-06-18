@@ -24,10 +24,10 @@ const HeaderComponent = () => {
                                     <a className="nav-link" href="/add-book">Add new book</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Pricing</a>
+                                    <a className="nav-link" href="/categories">Categories</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">FAQs</a>
+                                    <a className="nav-link" href="/comments">Comments</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">About</a>

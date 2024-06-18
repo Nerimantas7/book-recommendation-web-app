@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/books/comments")
@@ -41,7 +42,7 @@ public class BookCommentController {
     }
 
     //Build Update Book Comment REST API
-    @PutMapping("id")
+    @PutMapping("{id}")
     public ResponseEntity<BookCommentDto> updateComment(@PathVariable("id") Long commentId,
                                                         @RequestBody BookCommentDto updatedComment){
         BookCommentDto bookCommentDto = bookCommentService.updateBookComment(commentId, updatedComment);

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/books/categories")
@@ -49,7 +49,7 @@ public class BookCategoryController {
     }
 
     // Build Delete Book Category REST API
-    @DeleteMapping("id")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable("id") Long bookCategoryId){
         bookCategoryService.deleteBookCategory(bookCategoryId);
         return ResponseEntity.ok("Book Category deleted successfully!");
