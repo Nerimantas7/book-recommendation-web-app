@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createBook, getBook, updateBook } from '../services/BookService'; // Add necessary imports
+import { getAllCategories } from '../services/CategoryService';
 
 const BookComponent = () => {
 
@@ -9,6 +10,8 @@ const BookComponent = () => {
     const [imagePath, setImagePath] = useState('');
     const [codeISBN, setCodeISBN] = useState('');
     const [bookPages, setBookPages] = useState('');
+    const [categoryId, setCategoryId] = useState('');
+    const [categories, setCategories] = useState([]);
 
     const { id } = useParams();
 
@@ -18,7 +21,8 @@ const BookComponent = () => {
         bookDescription: '',
         imagePath: '',
         codeISBN: '',
-        bookPages: ''
+        bookPages: '',
+        bookCategory: ''
     });
 
     const navigator = useNavigate();
@@ -31,10 +35,18 @@ const BookComponent = () => {
                 setImagePath(response.data.imagePath);
                 setCodeISBN(response.data.codeISBN);
                 setBookPages(response.data.bookPages);
+                setCategoryId(response.data.categoryId);
             }).catch(error => {
                 console.error(error);
             });
         }
+
+        getAllCategories().then((response) => {
+            setCategories(response.data);
+        }).catch(error => {
+            console.error(error);
+        });
+
     }, [id]);
 
     // Function to save added or updated data from form
@@ -42,7 +54,7 @@ const BookComponent = () => {
         e.preventDefault();
 
         if (validateForm()) { // Add form validation check
-            const book = { bookTitle, bookDescription, imagePath, codeISBN, bookPages };
+            const book = { bookTitle, bookDescription, imagePath, codeISBN, bookPages, categoryId };
 
             if (id) {
                 // Add a confirmation dialog
@@ -104,7 +116,7 @@ const BookComponent = () => {
             valid = false;
         }
 
-        if (codeISBN.trim()) {
+        if (codeISBN && !isNaN(codeISBN)) {
             errorsCopy.codeISBN = '';
         } else {
             errorsCopy.codeISBN = 'ISBN code is required';
@@ -115,6 +127,13 @@ const BookComponent = () => {
             errorsCopy.bookPages = '';
         } else {
             errorsCopy.bookPages = 'Number of pages is required and must be a number';
+            valid = false;
+        }
+
+        if (categoryId) {
+            errorsCopy.bookCategory = '';
+        } else {
+            errorsCopy.bookCategory = 'Select category';
             valid = false;
         }
 
@@ -206,6 +225,24 @@ const BookComponent = () => {
                                     onChange={(e) => setBookPages(e.target.value)}
                                 />
                                 {errors.bookPages && <div className='invalid-feedback'>{errors.bookPages}</div>}
+                            </div>
+
+                            <div className='form-group mb-2'>
+                                <label className='form-label'>Category:</label>
+                                <select
+                                    className={`form-control ${errors.bookCategory ? 'is-invalid' : ''}`}
+                                    value={categoryId}
+                                    onChange={(e) => setCategoryId(e.target.value)}
+                                >
+                                    <option value="Select category">Select category</option>
+                                    {
+                                        categories.map(category =>
+                                            <option key={category.id} value={category.id}>{category.bookCategory}</option>
+                                        )
+                                    }
+
+                                </select>
+                                {errors.bookCategory && <div className='invalid-feedback'>{errors.bookCategory}</div>}
                             </div>
 
                             <button className='btn btn-secondary' onClick={saveOrUpdateBook}>Submit</button>
