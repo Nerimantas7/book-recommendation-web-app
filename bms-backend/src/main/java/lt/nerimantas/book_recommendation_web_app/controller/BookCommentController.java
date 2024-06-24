@@ -6,6 +6,7 @@ import lt.nerimantas.book_recommendation_web_app.dto.BookCommentDto;
 import lt.nerimantas.book_recommendation_web_app.service.BookCommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class BookCommentController {
     private BookCommentService bookCommentService;
 
     // Build Add Book Comment REST API
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping
     public ResponseEntity<BookCommentDto> addComment(@RequestBody BookCommentDto bookCommentDto){
         BookCommentDto addedComent = bookCommentService.addComment(bookCommentDto);
@@ -27,6 +29,7 @@ public class BookCommentController {
     }
 
     // Build Get Book Comment REST API
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("{id}")
     public ResponseEntity<BookCommentDto> getCommentById(@PathVariable("id") Long commentId){
         BookCommentDto bookCommentDto = bookCommentService.getCommentById(commentId);
@@ -35,6 +38,7 @@ public class BookCommentController {
     }
 
     // Build Get All Comments REST API
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<List<BookCommentDto>> getAllComments(){
         List<BookCommentDto> comments = bookCommentService.getAllComments();
@@ -42,6 +46,7 @@ public class BookCommentController {
     }
 
     //Build Update Book Comment REST API
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PutMapping("{id}")
     public ResponseEntity<BookCommentDto> updateComment(@PathVariable("id") Long commentId,
                                                         @RequestBody BookCommentDto updatedComment){
@@ -51,6 +56,7 @@ public class BookCommentController {
     }
 
     // Build Delete Book Comment REST API
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteComment(@PathVariable("id") Long commentId){
         bookCommentService.deleteBookComment(commentId);

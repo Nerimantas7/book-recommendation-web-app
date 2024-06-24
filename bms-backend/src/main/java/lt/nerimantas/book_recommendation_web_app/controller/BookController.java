@@ -9,6 +9,7 @@ import lt.nerimantas.book_recommendation_web_app.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class BookController {
     private BookService bookService;
 
     //Build Add Book REST API
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto){
         BookDto addedBook = bookService.addBook(bookDto);
@@ -29,6 +31,7 @@ public class BookController {
     }
 
     // Build Get Book REST API
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("{id}")
     public ResponseEntity<BookDto> getBookById(@PathVariable("id") Long bookId){
         BookDto bookDto = bookService.getBookById(bookId);
@@ -37,6 +40,7 @@ public class BookController {
     }
 
     // Build Get All Books REST API
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public  ResponseEntity<List<BookDto>> getAllBooks(){
         List<BookDto> books = bookService.getAllBooks();
@@ -44,6 +48,7 @@ public class BookController {
     }
 
     //Build Update Book REST API
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId,
                                               @RequestBody BookDto updatedBook){
@@ -53,6 +58,7 @@ public class BookController {
     }
 
     // Build Delete Book REST API
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteBook(@PathVariable("id") Long bookId){
         bookService.deleteBook(bookId);
