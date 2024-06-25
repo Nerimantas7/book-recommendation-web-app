@@ -18,7 +18,7 @@ public class BookCategoryController {
     private BookCategoryService bookCategoryService;
 
     // Build Add Book Category REST API
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')") //Method Level Security
     @PostMapping
     public ResponseEntity<BookCategoryDto> addCategory(@RequestBody BookCategoryDto bookCategoryDto){
         BookCategoryDto addedCategory = bookCategoryService.addCategory(bookCategoryDto);
@@ -27,7 +27,7 @@ public class BookCategoryController {
     }
 
     // Build Get Book REST API
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')") //Method Level Security
     @GetMapping("{id}")
     public ResponseEntity<BookCategoryDto> getCategoryById(@PathVariable("id") Long categoryId){
         BookCategoryDto bookCategoryDto = bookCategoryService.getCategoryById(categoryId);
@@ -36,7 +36,7 @@ public class BookCategoryController {
     }
 
     // Build Get All Categories REST API
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')") //Method Level Security
     @GetMapping
     public ResponseEntity<List<BookCategoryDto>> getAllCategories(){
         List<BookCategoryDto> categories = bookCategoryService.getAllCategories();
@@ -44,7 +44,7 @@ public class BookCategoryController {
     }
 
     // Build Update Book Category REST API
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')") //Method Level Security
     @PutMapping("{id}")
     public ResponseEntity<BookCategoryDto> updateBookCategory(@PathVariable("id") Long bookCategoryId,
                                                               @RequestBody BookCategoryDto updatedCategory){
@@ -54,7 +54,7 @@ public class BookCategoryController {
     }
 
     // Build Delete Book Category REST API
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')") //Method Level Security
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable("id") Long bookCategoryId){
         bookCategoryService.deleteBookCategory(bookCategoryId);
