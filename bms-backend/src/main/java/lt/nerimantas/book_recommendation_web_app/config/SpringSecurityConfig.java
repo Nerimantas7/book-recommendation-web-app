@@ -22,8 +22,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 public class SpringSecurityConfig {
 
-    private UserDetailsService userDetailsService;
-
+//    private UserDetailsService userDetailsService;
+//
     //Encode plain text password
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -34,22 +34,24 @@ public class SpringSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf((csrf) -> csrf.disable())
+                .headers(headers -> headers.frameOptions().disable()) // allows to achieve H2-console with line 44
                 .authorizeHttpRequests((authorize) -> {
 //                    authorize.requestMatchers(HttpMethod.POST,"/api/**").hasRole("ADMIN"); //users who have a role admin can be able to access, add todo, update todo and delete todo rest APIs.
 //                    authorize.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
 //                    authorize.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
 //                    authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN","USER");
 //                    authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
+                    authorize.requestMatchers("/h2-console/**").permitAll(); // allows to achieve H2-console with line 37
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
-
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+//        return configuration.getAuthenticationManager();
+//    }
+//
     @Bean
     public UserDetailsService userDetailsService(){
 
