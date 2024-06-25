@@ -8,6 +8,7 @@ import BookComponent from './components/BookComponent'
 import ListCategoriesComponent from './components/ListCategoriesComponent'
 import ListCommentsComponent from './components/ListCommentsComponent'
 import CategoryComponent from './components/CategoryComponent'
+import RegisterComponent from './components/RegisterComponent'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -35,6 +36,9 @@ function App() {
 
           {/* // http://localhost:5173/comments */}
           <Route path='/comments' element = {<ListCommentsComponent/>}></Route>
+
+          {/* // http://localhost:5173/register */}
+          <Route path='/register' element={<RegisterComponent/>}></Route>
         </Routes>        
         <FooterComponent />
       </BrowserRouter>
