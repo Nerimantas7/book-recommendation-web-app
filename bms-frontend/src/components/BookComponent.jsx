@@ -148,17 +148,16 @@ const BookComponent = () => {
 
     function pageTitle() {
         if (id) {
-            return <h2 className='text-center'>Update Book</h2>;
+            return <h3 className='text-center'>Update Book</h3>;
         } else {
-            return <h2 className='text-center'>Add Book</h2>;
+            return <h3 className='text-center'>Add Book</h3>;
         }
     }
 
     return (
         <div className='container'>
-            <br /> <br />
-            <div className='row'>
-                <div className='card col-md-6 offset-md-3 offset-md-3'>
+            <div className='row'>S
+                <div className='card col-md-6 offset-md-3 offset-md-3 mt-4'>
                     {pageTitle()}
                     <div className='card-body'>
                         <form>

@@ -37,8 +37,8 @@ const HeaderComponent = () => {
                         </div>
                     </div>
 
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a className='btn btn-outline-dark me-md-2' href="/register">Register</a>
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a className='btn btn-outline-dark me-md-2' href="/login">Login</a>
                     </div>
 
                     <nav className="navbar navbar-light bg-light">

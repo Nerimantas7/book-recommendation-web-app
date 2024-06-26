@@ -9,6 +9,7 @@ import ListCategoriesComponent from './components/ListCategoriesComponent'
 import ListCommentsComponent from './components/ListCommentsComponent'
 import CategoryComponent from './components/CategoryComponent'
 import RegisterComponent from './components/RegisterComponent'
+import LoginComponent from './components/LoginComponent'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -39,6 +40,9 @@ function App() {
 
           {/* // http://localhost:5173/register */}
           <Route path='/register' element={<RegisterComponent/>}></Route>
+
+          {/* // http://localhost:5173/login */}
+          <Route path='/login' element={<LoginComponent/>}></Route>
         </Routes>        
         <FooterComponent />
       </BrowserRouter>
