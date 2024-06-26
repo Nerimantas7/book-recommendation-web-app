@@ -1,10 +1,9 @@
 import React from 'react'
+import { isUserLoggedIn } from '../services/AuthService'
 
 const HeaderComponent = () => {
 
-    // function addNewBook() {
-    //     navigator('/add-book')
-    // }
+    const isAuth = isUserLoggedIn();
 
     return (
         <div>
@@ -20,12 +19,21 @@ const HeaderComponent = () => {
                                 <li className="nav-item">
                                     <a className="nav-link active" aria-current="page" href="/">Home</a>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/add-book">Add new book</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/categories">Categories</a>
-                                </li>
+
+                                {
+                                    isAuth &&
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/add-book">Add new book</a>
+                                    </li>
+                                }
+
+                                {
+                                    isAuth &&
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/categories">Categories</a>
+                                    </li>
+                                }
+
                                 <li className="nav-item">
                                     <a className="nav-link" href="/comments">Comments</a>
                                 </li>

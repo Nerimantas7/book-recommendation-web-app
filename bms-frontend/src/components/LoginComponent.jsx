@@ -91,7 +91,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginAPICall, storeToken } from '../services/AuthService';
+import { loginAPICall, saveLoggedInUser, storeToken } from '../services/AuthService';
 
 const LoginComponent = () => {
     const [userNameOrEmail, setUserNameOrEmail] = useState('');
@@ -103,14 +103,14 @@ const LoginComponent = () => {
         navigator('/');
     };
 
-    const handleLoginForm = (e) => {
+    async function handleLoginForm(e) {
         e.preventDefault();
 
         const loginObj = { userNameOrEmail, password };
 
         console.log(loginObj);
 
-        loginAPICall(userNameOrEmail, password)
+        await loginAPICall(userNameOrEmail, password)
             .then((response) => {
                 console.log(response.data);
 
@@ -118,7 +118,11 @@ const LoginComponent = () => {
                 const token = 'Basic ' + window.btoa(userNameOrEmail + ':' + password);
                 storeToken(token);
 
+                saveLoggedInUser(userNameOrEmail);
+
                 navigator('/');
+
+                window.location.reload(false);
             })
             .catch((error) => {
                 console.log(error);

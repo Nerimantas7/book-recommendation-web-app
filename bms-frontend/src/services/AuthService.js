@@ -9,3 +9,20 @@ export const loginAPICall = (userNameOrEmail, password) => axios.post(AUTH_REST_
 export const storeToken = (token) => localStorage.setItem("token", token);
 
 export const getToken = () => localStorage.getItem("token");
+
+export const saveLoggedInUser = (userNameOrEmail) => sessionStorage.setItem("authenticatedUser", userNameOrEmail);
+
+export const isUserLoggedIn = () => {
+    const userNameOrEmail = sessionStorage.getItem("authenticatedUser");
+
+    if (userNameOrEmail == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+export const getLoggedInUser = () => {
+    const userNameOrEmail = sessionStorage.getItem("authenticatedUser");
+    return userNameOrEmail;
+}

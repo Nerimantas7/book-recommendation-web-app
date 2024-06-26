@@ -27,6 +27,8 @@ const BookComponent = () => {
 
     const navigator = useNavigate();
 
+    const isAuth = isUserLoggedIn();
+
     useEffect(() => {
         if (id) {
             getBook(id).then((response) => {
