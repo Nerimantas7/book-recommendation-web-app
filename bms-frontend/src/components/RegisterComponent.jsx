@@ -98,9 +98,15 @@ const RegisterComponent = () => {
                                     </div>
                                 </div>
 
-                                <div className='form-group mb-3'>
-                                    <button className='btn btn-secondary' onClick={(e) => handleRegistrationForm(e)}>Submit</button>
-                                    <button className='btn btn-outline-secondary mx-3' onClick={handleCancel}>Cancel</button>
+                                <div className='form-group mb-3 d-flex align-items-center justify-content-between'>
+                                    <div className='form-group mb-3'>
+                                        <button className='btn btn-secondary' onClick={(e) => handleRegistrationForm(e)}>Submit</button>
+                                        <button className='btn btn-outline-secondary mx-3' onClick={handleCancel}>Cancel</button>
+                                    </div>
+                                    <div className='text-end'>
+                                        <p className='d-inline me-2'>Already registered?</p>
+                                        <a className="nav-link d-inline p-0 text-decoration-underline" href="/login">Login Here</a>
+                                    </div>
                                 </div>
                             </form>
                         </div>

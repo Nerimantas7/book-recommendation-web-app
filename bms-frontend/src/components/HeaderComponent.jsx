@@ -1,9 +1,17 @@
 import React from 'react'
-import { isUserLoggedIn } from '../services/AuthService'
+import { isUserLoggedIn, logout } from '../services/AuthService'
+import { useNavigate } from 'react-router-dom';
 
 const HeaderComponent = () => {
 
     const isAuth = isUserLoggedIn();
+
+    const navigator =useNavigate();
+
+    function handleLogout(){
+        logout();
+        navigator('/login')
+    }
 
     return (
         <div>
@@ -40,14 +48,23 @@ const HeaderComponent = () => {
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">About</a>
                                 </li>
-
                             </ul>
                         </div>
                     </div>
 
-                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a className='btn btn-outline-dark me-md-2' href="/login">Login</a>
-                    </div>
+                    {
+                        !isAuth &&
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a className='btn btn-outline-dark me-md-2' href="/login">Login</a>
+                        </div>
+                    }
+
+                    {
+                        isAuth &&
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a className='btn btn-outline-dark me-md-2' onClick={handleLogout}>Logout</a>
+                        </div>
+                    }
 
                     <nav className="navbar navbar-light bg-light">
                         <div className="container-fluid">

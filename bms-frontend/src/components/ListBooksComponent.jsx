@@ -85,6 +85,7 @@ const ListBooksComponent = () => {
                                         <button type="button" className="btn btn-outline-secondary mx-3" onClick={() => removeBook(book.id)}>Delete</button>
                                     </div>
                                 }
+                                
                             </div>
                         </div>
                     </div>
