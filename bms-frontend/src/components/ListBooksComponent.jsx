@@ -74,7 +74,7 @@ const ListBooksComponent = () => {
                                     <p className="card-text">{book.bookDescription}</p>
                                     <p className="card-text">ISBN: {book.codeISBN}</p>
                                     <p className="card-text">{book.bookPages} pages</p>
-                                    <button className="btn btn-secondary" onClick={() => handleShowModal(book)}>Write a comment</button>
+                                    <button className="btn btn-outline-secondary" onClick={() => handleShowModal(book)}>Write a comment</button>
                                     <button className="btn btn-outline-secondary mx-3" onClick={() => handleShowModal(book)}>Read comments</button>
                                 </div>
 
