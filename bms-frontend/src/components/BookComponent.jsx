@@ -32,6 +32,7 @@ const BookComponent = () => {
     useEffect(() => {
         if (id) {
             getBook(id).then((response) => {
+                console.log(response.data)
                 setBookTitle(response.data.bookTitle);
                 setBookDescription(response.data.bookDescription);
                 setImagePath(response.data.imagePath);
