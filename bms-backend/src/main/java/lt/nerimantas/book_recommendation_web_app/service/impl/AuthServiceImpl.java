@@ -8,6 +8,7 @@ import lt.nerimantas.book_recommendation_web_app.entity.User;
 import lt.nerimantas.book_recommendation_web_app.exception.BookAPIException;
 import lt.nerimantas.book_recommendation_web_app.repository.RoleRepository;
 import lt.nerimantas.book_recommendation_web_app.repository.UserRepository;
+import lt.nerimantas.book_recommendation_web_app.security.JwtTokenProvider;
 import lt.nerimantas.book_recommendation_web_app.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public String register(RegisterDto registerDto) {
@@ -66,6 +68,9 @@ public class AuthServiceImpl implements AuthService {
         ));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "User logged successfully!";
+
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        return token;
     }
 }
