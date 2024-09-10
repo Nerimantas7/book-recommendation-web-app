@@ -3,7 +3,7 @@ import { deleteBook, listBooks } from '../services/BookService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useNavigate } from 'react-router-dom';
-import { isUserLoggedIn } from '../services/AuthService'
+import { isAdminUser, isUserLoggedIn } from '../services/AuthService'
 
 const ListBooksComponent = () => {
     const [books, setBooks] = useState([]);
@@ -13,6 +13,8 @@ const ListBooksComponent = () => {
     const navigator = useNavigate();
 
     const isAuth = isUserLoggedIn();
+
+    const isAdmin = isAdminUser();
 
     useEffect(() => {
         getAllBooks()
@@ -79,13 +81,13 @@ const ListBooksComponent = () => {
                                 </div>
 
                                 {
-                                    isAuth &&
+                                    isAdmin &&
                                     <div className="card-footer">
                                         <button type="button" className="btn btn-outline-secondary" onClick={() => updateBook(book.id)}>Update</button>
                                         <button type="button" className="btn btn-outline-secondary mx-3" onClick={() => removeBook(book.id)}>Delete</button>
                                     </div>
                                 }
-                                
+
                             </div>
                         </div>
                     </div>

@@ -25,9 +25,12 @@ const LoginComponent = () => {
 
                 // Ensure there is a space after 'Basic'
                 const token = 'Bearer '+ response.data.accessToken;
+
+                const role = response.data.role;
+                
                 storeToken(token);
 
-                saveLoggedInUser(userNameOrEmail);
+                saveLoggedInUser(userNameOrEmail, role);
 
                 navigator('/');
 
