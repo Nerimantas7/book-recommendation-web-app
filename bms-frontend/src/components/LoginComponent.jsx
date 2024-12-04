@@ -24,10 +24,13 @@ const LoginComponent = () => {
                 console.log(response.data);
 
                 // Ensure there is a space after 'Basic'
-                const token = 'Basic ' + window.btoa(userNameOrEmail + ':' + password);
+                const token = 'Bearer '+ response.data.accessToken;
+
+                const role = response.data.role;
+                
                 storeToken(token);
 
-                saveLoggedInUser(userNameOrEmail);
+                saveLoggedInUser(userNameOrEmail, role);
 
                 navigator('/');
 

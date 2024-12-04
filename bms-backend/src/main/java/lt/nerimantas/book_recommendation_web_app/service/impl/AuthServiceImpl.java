@@ -1,6 +1,7 @@
 package lt.nerimantas.book_recommendation_web_app.service.impl;
 
 import lombok.AllArgsConstructor;
+import lt.nerimantas.book_recommendation_web_app.dto.JwtAuthResponse;
 import lt.nerimantas.book_recommendation_web_app.dto.LoginDto;
 import lt.nerimantas.book_recommendation_web_app.dto.RegisterDto;
 import lt.nerimantas.book_recommendation_web_app.entity.Role;
@@ -8,6 +9,7 @@ import lt.nerimantas.book_recommendation_web_app.entity.User;
 import lt.nerimantas.book_recommendation_web_app.exception.BookAPIException;
 import lt.nerimantas.book_recommendation_web_app.repository.RoleRepository;
 import lt.nerimantas.book_recommendation_web_app.repository.UserRepository;
+import lt.nerimantas.book_recommendation_web_app.security.JwtTokenProvider;
 import lt.nerimantas.book_recommendation_web_app.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -28,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public String register(RegisterDto registerDto) {
@@ -59,13 +63,33 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginDto loginDto) {
+    public JwtAuthResponse login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUserNameOrEmail(),
                 loginDto.getPassword()
         ));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "User logged successfully!";
+
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        Optional<User> userOptional = userRepository.findByUsernameOrEmail(loginDto.getUserNameOrEmail(), loginDto.getUserNameOrEmail());
+
+        String role = null;
+        if(userOptional.isPresent()){
+            User loggedInUser = userOptional.get();
+            Optional<Role> optionalRole = loggedInUser.getRoles().stream().findFirst();
+
+            if(optionalRole.isPresent()){
+                Role userRole = optionalRole.get();
+                role = userRole.getName();
+            }
+        }
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setRole(role);
+        jwtAuthResponse.setAccessToken(token);
+
+        return jwtAuthResponse;
     }
 }

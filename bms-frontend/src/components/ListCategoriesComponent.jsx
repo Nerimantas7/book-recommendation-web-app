@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { deleteCategory, getAllCategories } from '../services/CategoryService';
 import { Link, useNavigate } from 'react-router-dom';
+import {isAdminUser} from '../services/AuthService'
+
 
 const ListCategoriesComponent = () => {
 
     const [categories, setCategories] = useState([]);
 
     const navigator =useNavigate();
+
+    const isAdmin = isAdminUser();
 
     useEffect(() =>{
         listOfCategories();
@@ -37,7 +41,12 @@ const ListCategoriesComponent = () => {
   return (
     <div className='container'>
             <h2 className='text-center my-4'>List of Categories</h2>
-            <Link to='/add-category' className='btn btn-outline-secondary mb-2'>Add Category</Link>
+
+            {
+                isAdmin &&
+                <Link to='/add-category' className='btn btn-outline-secondary mb-2'>Add Category</Link>
+            }
+            
             <table className='table table-striped table-bordered'>
                 <thead>
                     <tr>
@@ -55,8 +64,16 @@ const ListCategoriesComponent = () => {
                                 <td>{category.bookCategory}</td>
                                 <td>{category.categoryDescription}</td>
                                 <td>
-                                    <button className='btn btn-outline-success' onClick={() => updateCategory(category.id)}>Update</button>
-                                    <button className='btn btn-outline-danger mx-3' onClick={() => removeCategory(category.id)}>Delete</button>
+                                    {
+                                        isAdmin &&
+                                        <button className='btn btn-outline-success' onClick={() => updateCategory(category.id)}>Update</button>
+                                    }
+                                    {
+                                        isAdmin &&
+                                        <button className='btn btn-outline-danger mx-3' onClick={() => removeCategory(category.id)}>Delete</button>
+                                    }
+                                    
+                                    
                                 </td>
                             </tr>
                         )

@@ -1,12 +1,15 @@
 import React from 'react'
 import { isUserLoggedIn, logout } from '../services/AuthService'
 import { useNavigate } from 'react-router-dom';
+import {isAdminUser} from '../services/AuthService'
 
 const HeaderComponent = () => {
 
     const isAuth = isUserLoggedIn();
 
     const navigator =useNavigate();
+
+    const isAdmin = isAdminUser();
 
     function handleLogout(){
         logout();
@@ -29,7 +32,7 @@ const HeaderComponent = () => {
                                 </li>
 
                                 {
-                                    isAuth &&
+                                    isAdmin &&
                                     <li className="nav-item">
                                         <a className="nav-link" href="/add-book">Add new book</a>
                                     </li>

@@ -1,6 +1,7 @@
 package lt.nerimantas.book_recommendation_web_app.controller;
 
 import lombok.AllArgsConstructor;
+import lt.nerimantas.book_recommendation_web_app.dto.JwtAuthResponse;
 import lt.nerimantas.book_recommendation_web_app.dto.LoginDto;
 import lt.nerimantas.book_recommendation_web_app.dto.RegisterDto;
 import lt.nerimantas.book_recommendation_web_app.service.AuthService;
@@ -27,10 +28,8 @@ public class AuthController {
 
     // Build Login REST API
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-        String response = authService.login(loginDto);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
+        JwtAuthResponse jwtAuthResponse = authService.login(loginDto);
+        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
     }
-
-
 }
