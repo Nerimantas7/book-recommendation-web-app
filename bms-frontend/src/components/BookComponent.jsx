@@ -159,7 +159,7 @@ const BookComponent = () => {
 
     return (
         <div className='container'>
-            <div className='row'>S
+            <div className='row'>
                 <div className='card col-md-6 offset-md-3 offset-md-3 mt-4'>
                     {pageTitle()}
                     <div className='card-body'>
